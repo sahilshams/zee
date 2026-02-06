@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Rose Day, Zee 🌹</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{background:linear-gradient(135deg,#fff0f3 0%,#ffccd5 100%);font-family:'Poppins',sans-serif;min-height:100vh;overflow-x:hidden;}
+        .petal-container{position:fixed;inset:0;pointer-events:none;z-index:0;}
+        .petal{position:absolute;background:#ff4d6d;opacity:.6;border-radius:50% 0 50% 50%;animation:fall linear forwards;}
+        @keyframes fall{to{transform:translateY(110vh) rotate(360deg);}}
+        .container{position:relative;z-index:1;max-width:600px;margin:auto;padding:40px 20px;text-align:center;}
+        .section{min-height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;opacity:0;transform:translateY(30px);transition:1.2s;margin-bottom:2rem;}
+        .section.visible{opacity:1;transform:none;}
+        h1{font-family:'Playfair Display',serif;font-size:2.5rem;color:#c9184a;}
+        h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1rem;}
+        p{font-size:1.1rem;line-height:1.8;color:#8c5e68;}
+        .script-text{font-family:'Dancing Script',cursive;font-size:1.8rem;color:#d63384;}
+        .love-card{background:rgba(255,255,255,.85);padding:40px;border-radius:30px;box-shadow:0 10px 30px rgba(164,19,60,.1);margin:20px 0;position:relative;}
+        .reveal-btn{background:linear-gradient(45deg,#ff8fa3,#ff4d6d);color:#fff;border:none;padding:18px 36px;border-radius:50px;font-size:1.1rem;cursor:pointer;margin-top:30px;}
+        .reveal-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#ffe5ec,#ffb3c1);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:1.5s;}
+        .reveal-overlay.active{opacity:1;pointer-events:auto;}
+        .reveal-text{font-family:'Playfair Display',serif;font-size:2rem;color:#800f2f;}
+    </style>
+</head>
+<body>
+
+<div class="petal-container" id="petalContainer"></div>
+
+<div class="container">
+    <div class="section visible">
+        <h1>happy rose day,<br>my beautiful bachaa, zee 🌹</h1>
+        <p class="script-text">my cute little bachaa, my pookie, my pumpkin</p>
+    </div>
+
+    <div class="section">
+        <div class="love-card">
+            <h2>you are my favorite flower</h2>
+            <p>soft, rare, pretty, and deeply loved<br>every rose reminds me of you</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>i love you so so much</h2>
+        <p>you are my bachaa<br>you are my love<br>you are my pookie<br>you are my safe place ✨</p>
+    </div>
+
+    <div class="section">
+        <h2>happy rose day, my love, my bacchaa 🌹</h2>
+        <p class="script-text">yours, forever and ever.</p>
+        <button class="reveal-btn" onclick="triggerReveal()">press and see what seven gods have stored for you</button>
+    </div>
+</div>
+
+<div class="reveal-overlay" id="revealOverlay">
+    <p class="reveal-text">sixty-nine kisses, sixty-seven minutes of hand holding, and forty-three soft hugs 🐻💗🌹</p>
+</div>
+
+<script>
+function createPetal(){
+ const p=document.createElement('div');
+ p.className='petal';
+ p.style.width=p.style.height=Math.random()*10+10+'px';
+ p.style.left=Math.random()*100+'vw';
+ p.style.animationDuration=Math.random()*3+4+'s';
+ document.getElementById('petalContainer').appendChild(p);
+ setTimeout(()=>p.remove(),10000);
+}
+for(let i=0;i<30;i++)createPetal();
+setInterval(createPetal,400);
+
+const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible')),{threshold:.2});
+document.querySelectorAll('.section').forEach(s=>obs.observe(s));
+
+function triggerReveal(){document.getElementById('revealOverlay').classList.add('active');}
+</script>
+
+</body>
+</html>
