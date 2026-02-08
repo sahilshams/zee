@@ -1,83 +1,420 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Rose Day, ZEE🌹</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{background:linear-gradient(135deg,#fff0f3 0%,#ffccd5 100%);font-family:'Poppins',sans-serif;min-height:100vh;overflow-x:hidden;}
-        .petal-container{position:fixed;inset:0;pointer-events:none;z-index:0;}
-        .petal{position:absolute;background:#ff4d6d;opacity:.6;border-radius:50% 0 50% 50%;animation:fall linear forwards;}
-        @keyframes fall{to{transform:translateY(110vh) rotate(360deg);}}
-        .container{position:relative;z-index:1;max-width:600px;margin:auto;padding:40px 20px;text-align:center;}
-        .section{min-height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;opacity:0;transform:translateY(30px);transition:1.2s;margin-bottom:2rem;}
-        .section.visible{opacity:1;transform:none;}
-        h1{font-family:'Playfair Display',serif;font-size:2.5rem;color:#c9184a;}
-        h2{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1rem;}
-        p{font-size:1.1rem;line-height:1.8;color:#8c5e68;}
-        .script-text{font-family:'Dancing Script',cursive;font-size:1.8rem;color:#d63384;}
-        .love-card{background:rgba(255,255,255,.85);padding:40px;border-radius:30px;box-shadow:0 10px 30px rgba(164,19,60,.1);margin:20px 0;position:relative;}
-        .reveal-btn{background:linear-gradient(45deg,#ff8fa3,#ff4d6d);color:#fff;border:none;padding:18px 36px;border-radius:50px;font-size:1.1rem;cursor:pointer;margin-top:30px;}
-        .reveal-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#ffe5ec,#ffb3c1);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:1.5s;}
-        .reveal-overlay.active{opacity:1;pointer-events:auto;}
-        .reveal-text{font-family:'Playfair Display',serif;font-size:2rem;color:#800f2f;}
-    </style>
-</head>
-<body>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>For Zee 🌹</title>  <link rel="preconnect" href="https://fonts.googleapis.com">  
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">  
 
-<div class="petal-container" id="petalContainer"></div>
+<style>  
+    /* --- Reset & Variables --- */  
+    * {  
+        margin: 0;  
+        padding: 0;  
+        box-sizing: border-box;  
+    }  
 
-<div class="container">
-    <div class="section visible">
-        <h1>happy rose day,<br>my beautiful bachaa, zee 🌹</h1>
-        <p class="script-text">my cute little bachaa, my pookie, my pumpkin</p>
-    </div>
+    :root {  
+        --bg-color: #fff0f3; /* Soft Blush */  
+        --card-bg: rgba(255, 255, 255, 0.85);  
+        --text-main: #5d4037; /* Warm Brown */  
+        --text-accent: #d8869b; /* Muted Rose */  
+        --font-serif: 'Playfair Display', serif;  
+        --font-script: 'Dancing Script', cursive;  
+        --font-sans: 'Poppins', sans-serif;  
+    }  
 
-    <div class="section">
-        <div class="love-card">
-            <h2>you are my favorite flower</h2>
-            <p>soft, rare, pretty, and deeply loved<br>every rose reminds me of you</p>
-        </div>
-    </div>
+    body {  
+        background: linear-gradient(180deg, #fff0f3 0%, #fde2e4 100%);  
+        color: var(--text-main);  
+        font-family: var(--font-sans);  
+        overflow-x: hidden;  
+        min-height: 100vh;  
+        position: relative;  
+    }  
 
-    <div class="section">
-        <h2>i love you so so much</h2>
-        <p>you are my bachaa<br>you are my love<br>you are my pookie<br>you are my safe place ✨</p>
-    </div>
+    /* --- Ambient Background --- */  
+    #background-layer {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        pointer-events: none;  
+        z-index: 0;  
+        background: radial-gradient(circle at center, transparent 0%, rgba(255, 240, 245, 0.5) 100%);  
+        box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.5);  
+    }  
 
-    <div class="section">
-        <h2>happy rose day, my love, my bacchaa 🌹</h2>
-        <p class="script-text">yours, forever and ever.</p>
-        <button class="reveal-btn" onclick="triggerReveal()">press to see what seven gods have stored for you</button>
-    </div>
-</div>
+    /* Floating Petals Container */  
+    #petals-container {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        pointer-events: none;  
+        z-index: 1;  
+        overflow: hidden;  
+    }  
 
-<div class="reveal-overlay" id="revealOverlay">
-    <p class="reveal-text">sixty-nine kisses on your soft hands, sixty-seven minutes of hand holding, and forty-three soft hugs 🐻💗🌹</p>
-</div>
+    .petal {  
+        position: absolute;  
+        font-size: 1.2rem;  
+        opacity: 0.6;  
+        animation: floatDown linear infinite;  
+    }  
 
-<script>
-function createPetal(){
- const p=document.createElement('div');
- p.className='petal';
- p.style.width=p.style.height=Math.random()*10+10+'px';
- p.style.left=Math.random()*100+'vw';
- p.style.animationDuration=Math.random()*3+4+'s';
- document.getElementById('petalContainer').appendChild(p);
- setTimeout(()=>p.remove(),10000);
-}
-for(let i=0;i<30;i++)createPetal();
-setInterval(createPetal,400);
+    /* --- Typography --- */  
+    h1, h2, h3 {  
+        font-family: var(--font-serif);  
+        font-weight: 400;  
+    }  
 
-const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible')),{threshold:.2});
-document.querySelectorAll('.section').forEach(s=>obs.observe(s));
+    .handwritten {  
+        font-family: var(--font-script);  
+        font-size: 1.8rem;  
+        color: var(--text-accent);  
+    }  
 
-function triggerReveal(){document.getElementById('revealOverlay').classList.add('active');}
+    p {  
+        line-height: 1.8;  
+        font-size: 1.1rem;  
+        color: #6d5656;  
+    }  
+
+    /* --- Layout & Sections --- */  
+    .container {  
+        position: relative;  
+        z-index: 2;  
+        max-width: 600px;  
+        margin: 0 auto;  
+        padding: 2rem;  
+        display: flex;  
+        flex-direction: column;  
+        gap: 6rem; /* Space between sections */  
+        padding-bottom: 8rem;  
+    }  
+
+    section {  
+        opacity: 0;  
+        transform: translateY(30px);  
+        transition: opacity 1.5s ease, transform 1.5s ease;  
+        text-align: center;  
+    }  
+
+    section.visible {  
+        opacity: 1;  
+        transform: translateY(0);  
+    }  
+
+    /* --- Specific Section Styles --- */  
+
+    /* Section 1: Opening */  
+    .intro-title {  
+        font-size: 2.5rem;  
+        margin-bottom: 0.5rem;  
+        letter-spacing: -0.5px;  
+    }  
+      
+    .sub-intro {  
+        font-size: 1.4rem;  
+        opacity: 0.8;  
+        margin-top: 10px;  
+    }  
+
+    /* Section 2: Aesthetic Card */  
+    .love-card {  
+        background: var(--card-bg);  
+        padding: 2.5rem;  
+        border-radius: 20px;  
+        box-shadow: 0 10px 30px rgba(216, 134, 155, 0.15);  
+        backdrop-filter: blur(5px);  
+        border: 1px solid rgba(255, 255, 255, 0.6);  
+        animation: breathe 6s infinite ease-in-out;  
+    }  
+
+    .love-card p {  
+        font-style: italic;  
+        margin-bottom: 10px;  
+    }  
+
+    /* Section 3: Bookish */  
+    .book-page {  
+        background-color: #fff9e6; /* Old paper color */  
+        padding: 2rem;  
+        border-radius: 4px 15px 15px 4px;  
+        box-shadow: inset 10px 0 20px rgba(0,0,0,0.03), 5px 5px 15px rgba(0,0,0,0.05);  
+        position: relative;  
+        text-align: left; /* Reading style */  
+    }  
+      
+    .book-page::before {  
+        content: '';  
+        position: absolute;  
+        left: 15px;  
+        top: 2rem;  
+        bottom: 2rem;  
+        width: 1px;  
+        background: #e0d0c0;  
+    }  
+
+    .quote {  
+        font-family: var(--font-serif);  
+        font-size: 1.2rem;  
+        margin-bottom: 1.5rem;  
+        padding-left: 20px;  
+        color: #4a3b32;  
+    }  
+
+    .quote span {  
+        display: block;  
+        font-size: 0.9rem;  
+        margin-top: 5px;  
+        color: var(--text-accent);  
+        text-align: right;  
+        font-family: var(--font-sans);  
+    }  
+
+    /* Section 4: Nicknames */  
+    .nickname-list {  
+        display: flex;  
+        flex-direction: column;  
+        gap: 1rem;  
+    }  
+
+    .glow-text {  
+        font-family: var(--font-script);  
+        font-size: 2.2rem;  
+        color: var(--text-accent);  
+        text-shadow: 0 0 10px rgba(216, 134, 155, 0.3);  
+        animation: gentleGlow 4s infinite alternate;  
+    }  
+
+    /* Section 5: The Proposal */  
+    .final-message h2 {  
+        font-size: 2rem;  
+        margin-bottom: 1.5rem;  
+    }  
+
+    .proposal-question {  
+        font-size: 1.8rem;  
+        font-weight: 600;  
+        margin: 2rem 0;  
+        font-family: var(--font-serif);  
+        color: #8a4a5d;  
+    }  
+
+    /* Button */  
+    .reveal-btn {  
+        background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);  
+        border: none;  
+        padding: 15px 35px;  
+        border-radius: 50px;  
+        font-family: var(--font-sans);  
+        font-size: 1rem;  
+        color: #880e4f;  
+        cursor: pointer;  
+        box-shadow: 0 5px 15px rgba(216, 134, 155, 0.2);  
+        transition: transform 0.3s ease, box-shadow 0.3s ease;  
+        outline: none;  
+        margin-top: 1rem;  
+    }  
+
+    .reveal-btn:active {  
+        transform: scale(0.95);  
+    }  
+
+    /* Hidden Content */  
+    #hidden-content {  
+        display: none;  
+        margin-top: 2rem;  
+        opacity: 0;  
+        transition: opacity 2s ease;  
+    }  
+      
+    #hidden-content.show {  
+        display: block;  
+        animation: fadeIn 2s forwards;  
+    }  
+
+    .final-list {  
+        list-style: none;  
+        font-family: var(--font-script);  
+        font-size: 1.5rem;  
+        color: var(--text-main);  
+    }  
+
+    .final-list li {  
+        margin-bottom: 0.8rem;  
+    }  
+
+    /* --- Animations --- */  
+    @keyframes floatDown {  
+        0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }  
+        20% { opacity: 0.8; }  
+        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }  
+    }  
+
+    @keyframes breathe {  
+        0%, 100% { transform: scale(1); }  
+        50% { transform: scale(1.02); }  
+    }  
+
+    @keyframes gentleGlow {  
+        0% { text-shadow: 0 0 5px rgba(216, 134, 155, 0.1); }  
+        100% { text-shadow: 0 0 15px rgba(216, 134, 155, 0.6); }  
+    }  
+
+    @keyframes fadeIn {  
+        from { opacity: 0; transform: translateY(10px); }  
+        to { opacity: 1; transform: translateY(0); }  
+    }  
+
+    /* Mobile Adjustments */  
+    @media (max-width: 480px) {  
+        .container { padding: 1.5rem; gap: 4rem; }  
+        .intro-title { font-size: 2rem; }  
+        .book-page { padding: 1.5rem; }  
+    }  
+</style>
+
+</head>  
+<body>  <div id="background-layer"></div>  
+<div id="petals-container"></div>  
+
+<div class="container">  
+
+    <section class="section">  
+        <h1 class="intro-title">happy proposal day,<br>my beautiful babygirl 🌹</h1>  
+        <p class="sub-intro handwritten">my bachaa, my pookie, my pumpkin, my cutiepie,my munchkin</p>  
+    </section>  
+
+    <section class="section">  
+        <div class="love-card">  
+            <p>zee, you are not just someone i love</p>  
+            <p>you are someone i care for deeply</p>  
+            <p>you’re someone i never have to pretend with</p>  
+            <p>you are someone i always feel safe with</p>  
+        </div>  
+    </section>  
+
+    <section class="section">  
+        <div class="book-page">  
+            <div class="quote">  
+                "You and I, it’s as though we have been taught to kiss in heaven and sent down to earth together, to see if we know what we were taught"  
+            </div>  
+            <div class="quote">  
+                "Do I love you? My god, if your love were a grain of sand, mine would be a universe of beaches."  
+            </div>  
+            <div class="quote">  
+                "There's plenty more fish in the sea, but this particular fish loves you with all his crooked heart"  
+                <span> bachaaa</span>  
+            </div>  
+        </div>  
+    </section>  
+
+    <section class="section">  
+        <div class="nickname-list">  
+            <span class="glow-text">my bachaa</span>  
+            <span class="glow-text">my pookie</span>  
+            <span class="glow-text">my pumpkin</span>  
+            <span class="glow-text">my goodgirl</span>  
+        </div>  
+        <p style="margin-top: 2rem; font-style: italic; opacity: 0.8;">  
+            If this were a novel, you’d be the reason everything goes wrong and why I’d still turn the page.  
+        </p>  
+    </section>  
+
+    <section class="section final-message">  
+        <p>zee, I'll always choose you.</p>  
+        <p>zee, I'll always love you.</p>  
+        <p>zee, I'll always be your good boy.</p>  
+        <p>zee, you'll always be my good girl.</p>  
+          
+        <div class="proposal-question">Zanny, will you be mine?</div>  
+
+        <button id="revealBtn" class="reveal-btn">💗 press to see what is coming your way 💗</button>  
+
+        <div id="hidden-content">  
+            <ul class="final-list">  
+                <li>unlimited forehead kisses,</li>  
+                <li>holding hands four long hours,</li>  
+                <li>long hour romantic talks,</li>  
+                <li>Endless cuddles and soft cheek squeezes,</li>  
+                <li>and a lifetime of soft and gentle love.</li>  
+            </ul>  
+        </div>  
+    </section>  
+
+</div>  
+
+<script>  
+    // --- 1. Reveal on Scroll ---  
+    const observerOptions = {  
+        threshold: 0.15 // Trigger when 15% of section is visible  
+    };  
+
+    const observer = new IntersectionObserver((entries) => {  
+        entries.forEach(entry => {  
+            if (entry.isIntersecting) {  
+                entry.target.classList.add('visible');  
+            }  
+        });  
+    }, observerOptions);  
+
+    document.querySelectorAll('.section').forEach(section => {  
+        observer.observe(section);  
+    });  
+
+    // --- 2. Floating Petals Logic ---  
+    function createPetal() {  
+        const container = document.getElementById('petals-container');  
+        const petal = document.createElement('span');  
+        petal.classList.add('petal');  
+          
+        // Randomly choose a flower emoji  
+        const flowers = ['🌸', '🌹', '✨', '🍂', '🤍'];  
+        petal.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];  
+
+        // Random positioning and timing  
+        petal.style.left = Math.random() * 100 + 'vw';  
+        petal.style.animationDuration = Math.random() * 5 + 5 + 's'; // 5 to 10 seconds  
+        petal.style.fontSize = Math.random() * 10 + 15 + 'px';  
+          
+        container.appendChild(petal);  
+
+        // Remove petal after animation to keep DOM clean  
+        setTimeout(() => {  
+            petal.remove();  
+        }, 10000);  
+    }  
+
+    // Create petals periodically  
+    setInterval(createPetal, 600);  
+
+
+    // --- 3. Button Reveal Interaction ---  
+    const btn = document.getElementById('revealBtn');  
+    const hiddenContent = document.getElementById('hidden-content');  
+
+    btn.addEventListener('click', () => {  
+        // Fade out button  
+        btn.style.opacity = '0';  
+        btn.style.pointerEvents = 'none';  
+
+        // Show hidden content  
+        setTimeout(() => {  
+            btn.style.display = 'none';  
+            hiddenContent.classList.add('show');  
+              
+            // Trigger a "bloom" of extra petals  
+            for(let i=0; i<30; i++) {  
+                setTimeout(createPetal, i * 100);  
+            }  
+        }, 500);  
+    });  
 </script>
 
-</body>
+</body>  
 </html>
